@@ -424,4 +424,7 @@ ol {
 body {
   font-family: 'Poppins', sans-serif; }
 
+.fa-trash, .fa-square-check {
+  pointer-events: none; }
+
 /*# sourceMappingURL=index.css.map */
