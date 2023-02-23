@@ -424,7 +424,27 @@ ol {
 body {
   font-family: 'Poppins', sans-serif; }
 
-.fa-trash, .fa-square-check {
+.fa-trash,
+.fa-square-check,
+.fa-magnifying-glass {
   pointer-events: none; }
+
+.search-input {
+  display: none; }
+
+.search-form-active > .search-input {
+  display: inline; }
+
+.search-glass {
+  display: inline; }
+
+.search-form-active .search-glass {
+  display: none; }
+
+.search-close {
+  display: none; }
+
+.search-form-active .search-close {
+  display: inline; }
 
 /*# sourceMappingURL=index.css.map */

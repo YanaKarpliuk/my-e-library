@@ -23,18 +23,32 @@
   <body>
     <header>
       <h1>My e-library</h1>
+      <form class="search-form">
+        <input class="search-input" type="search" />
+        <button class="search-btn">
+          <i class="fa-solid fa-magnifying-glass search-glass"></i>
+          <i class="fa-sharp fa-solid fa-xmark search-close"></i>
+        </button>
+      </form>
     </header>
     <form class="book-form">
-      <input type="text" class="book-input" />
+      <input type="text" class="book-input book-author" placeholder="Enter an author's name"/>
+      <input type="text" class="book-input book-name" placeholder="Enter a book's name" />
       <button class="book-btn" type="submit">
         <i class="fa-regular fa-plus"></i>
       </button>
     </form>
 
+    <div>
+      <button class="reading-list-btn">My reading list</button>
+      <button class="in-progress-btn">In progress</button>
+      <button class="completed-btn">Completed</button>
+    </div>
+
     <div class="book-container">
       <ul class="book-list"></ul>
     </div>
 
-    <script type="module" src="./dist/bundle.js" ></script>
+    <script type="module" src="./dist/bundle.js"></script>
   </body>
 </html>
