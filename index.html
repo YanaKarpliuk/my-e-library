@@ -21,33 +21,67 @@
     <title>My e-library</title>
   </head>
   <body>
-    <header>
-      <h1>My e-library</h1>
-      <form class="search-form">
-        <input class="search-input" type="search" />
-        <button class="search-btn">
-          <i class="fa-solid fa-magnifying-glass search-glass"></i>
-          <i class="fa-sharp fa-solid fa-xmark search-close"></i>
-        </button>
-      </form>
-    </header>
-    <form class="book-form">
-      <input type="text" class="book-input book-author" placeholder="Enter an author's name"/>
-      <input type="text" class="book-input book-name" placeholder="Enter a book's name" />
-      <button class="book-btn" type="submit">
-        <i class="fa-regular fa-plus"></i>
-      </button>
-    </form>
+    <main>
+      <section class="section-top">
+        <div class="img-box">
+          <img class="img-bg" src="./images/bg.jpeg" alt="background" />
+        </div>
+        <div class="container">
+          <div class="general">
+            <div class="logo">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="27"
+                height="27"
+                viewBox="0 0 256 256"
+              >
+                <path
+                  fill="#ebbe83"
+                  d="M208 24H72a32.1 32.1 0 0 0-32 32v168a8 8 0 0 0 8 8h144a8 8 0 0 0 0-16H56a16 16 0 0 1 16-16h136a8 8 0 0 0 8-8V32a8 8 0 0 0-8-8Zm-24 96l-25.6-19.2a3.9 3.9 0 0 0-4.8 0L128 120V40h56Z"
+                />
+              </svg>
+              <h2 class="logo-name">my e-library</h2>
+            </div>
 
-    <div>
-      <button class="reading-list-btn">My reading list</button>
-      <button class="in-progress-btn">In progress</button>
-      <button class="completed-btn">Completed</button>
-    </div>
+            <form class="search-form">
+              <input class="search-input input" type="search" />
+              <button class="search-btn">
+                <i class="fa-solid fa-magnifying-glass search-glass"></i>
+                <i class="fa-sharp fa-solid fa-xmark search-close"></i>
+              </button>
+            </form>
+          </div>
+          <h1 class="title">Keep track of your books </h1>
+          <form class="book-form">
+            <input
+              type="text"
+              class="book-input book-author input"
+              placeholder="Enter an author's name"
+            />
+            <input
+              type="text"
+              class="book-input book-name input"
+              placeholder="Enter a book's name"
+            />
+            <button class="book-btn" type="submit">
+              Add book
+            </button>
+          </form>
+        </div>
+      </section>
 
-    <div class="book-container">
-      <ul class="book-list"></ul>
-    </div>
+      <section class="section-bottom container">
+        <div class="filter">
+          <button class="reading-list-btn input filter-btn">My reading list</button>
+          <button class="in-progress-btn input filter-btn">In progress</button>
+          <button class="completed-btn input filter-btn">Completed</button>
+        </div>
+
+        <div class="book-container">
+          <ul class="book-list"></ul>
+        </div>
+      </section>
+    </main>
 
     <script type="module" src="./dist/bundle.js"></script>
   </body>

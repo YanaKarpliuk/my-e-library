@@ -12,6 +12,7 @@
   "dependencies": {
     "nanoid": "^4.0.1",
     "normalize-scss": "^7.0.1",
+    "notiflix": "^3.2.6",
     "sass": "^1.58.3"
   },
   "devDependencies": {

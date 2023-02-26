@@ -1,8 +1,10 @@
 import { nanoid } from "nanoid";
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 // Selectors
 const bookAuthorInputEl = document.querySelector(".book-author");
 const bookNameInputEl = document.querySelector(".book-name");
+const bookInputAllEl = document.querySelectorAll(".book-input");
 const bookListEl = document.querySelector(".book-list");
 const bookFormEl = document.querySelector(".book-form");
 const readingListBtnEl = document.querySelector(".reading-list-btn");
@@ -11,11 +13,12 @@ const completedBtnEl = document.querySelector(".completed-btn");
 const searchBtnEl = document.querySelector(".search-btn");
 const searchInputEl = document.querySelector(".search-input");
 const searchFormEl = document.querySelector(".search-form");
+const titleEl = document.querySelector(".title");
 
 let bookList = JSON.parse(localStorage.getItem("book")) || [];
 
 // Event Listeners
-window.addEventListener("load", () => renderBooks(bookList));
+window.addEventListener("load", showBooksAll());
 bookFormEl.addEventListener("submit", addBook);
 bookListEl.addEventListener("click", deleteOrCheckBook);
 inProgressBtnEl.addEventListener("click", showBooksInProgress);
@@ -23,21 +26,32 @@ readingListBtnEl.addEventListener("click", showBooksAll);
 completedBtnEl.addEventListener("click", showBooksCompleted);
 searchBtnEl.addEventListener("click", toggleInput);
 searchInputEl.addEventListener("keyup", showSearchedBooks);
+bookInputAllEl.forEach((el) => el.addEventListener("click", hideTitle));
 
 // Functions
 function addBook(e) {
   e.preventDefault();
-  bookList.unshift({
-    name: bookNameInputEl.value,
-    author: bookAuthorInputEl.value,
-    id: nanoid(),
-    completed: false,
-  });
-  e.target.reset();
+  if (bookNameInputEl.value || bookAuthorInputEl.value) {
+    bookList.unshift({
+      name: bookNameInputEl.value,
+      author: bookAuthorInputEl.value,
+      id: nanoid(),
+      completed: false,
+    });
+    e.target.reset();
 
-  refreshLS();
+    refreshLS();
 
-  renderBooks(bookList);
+    Notify.success('The book has been added');
+
+    renderBooks(bookList);
+  } else {
+    Notify.info('Please fill in all the fields');
+  }
+}
+
+function hideTitle() {
+  titleEl.classList.add("title-hidden");
 }
 
 function renderBooks(items) {
@@ -48,16 +62,18 @@ function renderBooks(items) {
       ? items
           .map((book) => {
             return `
-      <li data-book-id="${book.id}">
-      <p>${book.author}</p>
-        <p>${book.name}</p>
+      <li class="book-item ${
+        book.completed === true ? "completed" : "reading"
+      }" data-book-id="${book.id}">
+        <div class="book-info">
+          <p class="book-item-name">${book.name}</p>
+          <p class="book-item-author">by ${book.author}</p>
+        </div>
         <div>
-          <button class="check-btn ${
-            book.completed === true ? "completed" : "reading"
-          }">
-            <i class="fa-regular fa-square-check"></i>
+          <button class="check-btn" title="Check the completed book">
+          <i class="fa-solid fa-check"></i>
           </button>
-          <button class="delete-btn">
+          <button class="delete-btn" title="Delete the book">
             <i class="fa-solid fa-trash"></i>
           </button>
         </div>
@@ -65,7 +81,7 @@ function renderBooks(items) {
     `;
           })
           .join("")
-      : `<p>No books in the list</p>`;
+      : `<p class="book-empty">No books in the list</p>`;
 
   bookListEl.insertAdjacentHTML("beforeend", listMarkup);
 }
@@ -77,6 +93,7 @@ function deleteOrCheckBook(e) {
   if (e.target.classList[0] === "delete-btn") {
     bookList = bookList.filter((book) => book.id !== parentId);
     refreshLS();
+    Notify.success('The book has been deleted');
     renderBooks(bookList);
   } else if (e.target.classList[0] === "check-btn") {
     bookList.map((book) =>
@@ -84,14 +101,25 @@ function deleteOrCheckBook(e) {
     );
     refreshLS();
     renderBooks(bookList);
+    if(e.target.parentElement.parentElement.classList[1] === 'reading') {
+      Notify.success('The book has been added to completed');
+    } else if(e.target.parentElement.parentElement.classList[1] === 'completed') {
+      Notify.success('The book has been removed from completed');
+    }
   }
 }
 
 function showBooksAll() {
+  inProgressBtnEl.classList.remove("active-filter");
+  readingListBtnEl.classList.add("active-filter");
+  completedBtnEl.classList.remove("active-filter");
   renderBooks(bookList);
 }
 
 function showBooksInProgress() {
+  inProgressBtnEl.classList.add("active-filter");
+  readingListBtnEl.classList.remove("active-filter");
+  completedBtnEl.classList.remove("active-filter");
   const booksInProgressList = bookList.filter(
     (book) => book.completed === false
   );
@@ -99,6 +127,9 @@ function showBooksInProgress() {
 }
 
 function showBooksCompleted() {
+  inProgressBtnEl.classList.remove("active-filter");
+  readingListBtnEl.classList.remove("active-filter");
+  completedBtnEl.classList.add("active-filter");
   const booksCompletedList = bookList.filter((book) => book.completed === true);
   renderBooks(booksCompletedList);
 }
@@ -110,11 +141,11 @@ function refreshLS() {
 function toggleInput(e) {
   e.preventDefault();
 
-  searchFormEl.classList.toggle('search-form-active')
-  
-  searchInputEl.value = ''
+  searchFormEl.classList.toggle("search-form-active");
 
-  renderBooks(bookList)
+  searchInputEl.value = "";
+
+  renderBooks(bookList);
 }
 
 function showSearchedBooks(e) {

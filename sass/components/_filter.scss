@@ -1,0 +1,23 @@
+.filter {
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+
+  @media screen and (min-width: 400px) {
+    grid-template-columns: 1fr 1fr;
+
+  }
+
+  @media screen and (min-width: 550px) {
+    display: block;
+  }
+
+  &-btn:hover {
+    background-color: #ebbe83;
+  }
+}
+
+.active-filter {
+  background-color: #ebbe83;
+}

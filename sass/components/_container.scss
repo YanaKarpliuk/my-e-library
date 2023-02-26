@@ -1,0 +1,17 @@
+body {
+  background-color: #1d1d1d;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  width: 900px;
+  max-width: 900px;
+}
+
+.container {
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}

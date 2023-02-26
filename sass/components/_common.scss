@@ -1,0 +1,13 @@
+.fa-trash,
+.fa-check,
+.fa-magnifying-glass {
+  pointer-events: none;
+}
+
+.input {
+  outline: none;
+  border-radius: 20px;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  padding: 6px 15px;
+}
