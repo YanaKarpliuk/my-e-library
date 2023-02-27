@@ -182,8 +182,8 @@ function showSearchedBooks(e) {
     const searchedBooks = bookList.filter((book) => {
       
       return (
-        book.name.includes(e.target.value) ||
-        book.author.includes(e.target.value)
+        book.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        book.author.toLowerCase().includes(e.target.value.toLowerCase())
       );
     });
 
