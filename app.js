@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { Notify } from "notiflix/build/notiflix-notify-aio";
 
 // Selectors
 const bookAuthorInputEl = document.querySelector(".book-author");
@@ -42,11 +42,15 @@ function addBook(e) {
 
     refreshLS();
 
-    Notify.success('The book has been added');
+    Notify.success("The book has been added");
+
+    inProgressBtnEl.classList.remove("active-filter");
+    readingListBtnEl.classList.add("active-filter");
+    completedBtnEl.classList.remove("active-filter");
 
     renderBooks(bookList);
   } else {
-    Notify.info('Please fill in all the fields');
+    Notify.info("Please fill in all the fields");
   }
 }
 
@@ -93,18 +97,36 @@ function deleteOrCheckBook(e) {
   if (e.target.classList[0] === "delete-btn") {
     bookList = bookList.filter((book) => book.id !== parentId);
     refreshLS();
-    Notify.success('The book has been deleted');
-    renderBooks(bookList);
+    Notify.success("The book has been deleted");
+
+    if (inProgressBtnEl.classList.contains("active-filter")) {
+      showBooksInProgress();
+    } else if (completedBtnEl.classList.contains("active-filter")) {
+      showBooksCompleted();
+    } else {
+      renderBooks(bookList);
+    }
   } else if (e.target.classList[0] === "check-btn") {
     bookList.map((book) =>
       book.id === parentId ? (book.completed = !book.completed) : book.completed
     );
     refreshLS();
-    renderBooks(bookList);
-    if(e.target.parentElement.parentElement.classList[1] === 'reading') {
-      Notify.success('The book has been added to completed');
-    } else if(e.target.parentElement.parentElement.classList[1] === 'completed') {
-      Notify.success('The book has been removed from completed');
+
+    if (inProgressBtnEl.classList.contains("active-filter")) {
+      console.log(inProgressBtnEl.classList.contains("active-filter"))
+      showBooksInProgress();
+    } else if (completedBtnEl.classList.contains("active-filter")) {
+      showBooksCompleted();
+    } else {
+      renderBooks(bookList);
+    }
+
+    if (e.target.parentElement.parentElement.classList[1] === "reading") {
+      Notify.success("The book has been added to completed");
+    } else if (
+      e.target.parentElement.parentElement.classList[1] === "completed"
+    ) {
+      Notify.success("The book has been removed from completed");
     }
   }
 }
@@ -145,14 +167,20 @@ function toggleInput(e) {
 
   searchInputEl.value = "";
 
+  inProgressBtnEl.classList.remove("active-filter");
+  readingListBtnEl.classList.add("active-filter");
+  completedBtnEl.classList.remove("active-filter");
+
   renderBooks(bookList);
 }
 
 function showSearchedBooks(e) {
+
   if (e.target.value === "") {
     renderBooks(bookList);
   } else {
     const searchedBooks = bookList.filter((book) => {
+      
       return (
         book.name.includes(e.target.value) ||
         book.author.includes(e.target.value)
