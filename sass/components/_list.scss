@@ -8,7 +8,8 @@
     align-items: center;
     border-radius: 20px;
 
-    &-name, &-author {
+    &-name,
+    &-author {
       max-width: 50vw;
       white-space: nowrap;
       overflow: hidden;
@@ -106,6 +107,10 @@
   }
 
   & > i {
+    color: #000;
+  }
+
+  &:hover > i {
     color: rgb(153, 0, 0);
   }
 }

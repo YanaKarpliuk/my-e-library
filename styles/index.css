@@ -639,6 +639,8 @@ body {
   .delete-btn:hover {
     background-color: #e4aa5f; }
   .delete-btn > i {
+    color: #000; }
+  .delete-btn:hover > i {
     color: #990000; }
 
 .filter {
