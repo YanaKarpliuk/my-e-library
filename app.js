@@ -73,9 +73,9 @@ function renderBooks(items) {
           <p class="book-item-name">${book.name}</p>
           <p class="book-item-author">by ${book.author}</p>
         </div>
-        <div>
+        <div class="book-btns">
           <button class="check-btn" title="Check the completed book">
-          <i class="fa-solid fa-check"></i>
+            <i class="fa-solid fa-check"></i>
           </button>
           <button class="delete-btn" title="Delete the book">
             <i class="fa-solid fa-trash"></i>
